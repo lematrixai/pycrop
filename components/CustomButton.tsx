@@ -23,7 +23,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
     case "primary":
       return "text-black";
     case "secondary":
-      return "text-[#2D6936]";
+      return "text-[#47734D]";
     case "danger":
       return "text-red-100";
     case "success":
@@ -46,18 +46,13 @@ const CustomButton = ({
   return (
     <TouchableOpacity
     onPress={onPress}
-    className={`w-full flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${className}`}
-    style={{
-      borderRadius: moderateScale(16),  // rounded-2xl
-      padding: moderateScale(12),  // p-3
-      shadowRadius: moderateScale(4),
-    }}
+    className={`w-full flex-row justify-center py-4 rounded-2xl items-center ${getBgVariantStyle(bgVariant)} ${className}`}
     {...props}
   >
     {IconLeft && <View style={{ marginRight: moderateScale(8) }}>{<IconLeft />}</View>}
     <Text 
       className={`${getTextVariantStyle(textVariant)}`}
-      style={{ fontSize: moderateScale(18), fontWeight: "bold" }} // text-lg font-bold
+      style={{ fontSize: moderateScale(18), fontFamily: "Jakarta-bold", fontWeight: "bold" }} // text-lg font-bold
     >
       {title}
     </Text>
