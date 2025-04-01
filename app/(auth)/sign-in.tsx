@@ -1,7 +1,7 @@
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert, ScrollView, Text, View, StyleSheet } from "react-native";
+import { Alert, ScrollView, Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
@@ -11,6 +11,7 @@ import LottieView from "lottie-react-native";
 
 const SignIn = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form, setForm] = useState({
     email: "",
@@ -19,7 +20,7 @@ const SignIn = () => {
 
   const onSignInPress = useCallback(async () => {
     if (!isLoaded) return;
-
+    setIsLoading(true);
     try {
       const signInAttempt = await signIn.create({
         identifier: form.email,
@@ -37,6 +38,8 @@ const SignIn = () => {
     } catch (err: any) {
       console.log(JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
+    } finally {
+      setIsLoading(false);
     }
   }, [isLoaded, form]);
 
@@ -76,10 +79,16 @@ const SignIn = () => {
           />
 
           <CustomButton
-            title="Sign In"
+            title={isLoading ? "Sign In...": "Sign In"}
             onPress={onSignInPress}
+            disabled={isLoading}
             style={styles.signInButton}
+            IconRight={() => isLoading ? <ActivityIndicator color="#fff" /> : null}
+            className="bg-success-500"
+
           />
+     
+            
 
           <OAuth />
 

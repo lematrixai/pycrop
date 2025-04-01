@@ -1,7 +1,7 @@
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Alert, Image, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Alert, Image, SafeAreaView, ScrollView, Text, View, ActivityIndicator } from "react-native";
 import { ReactNativeModal } from "react-native-modal";
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
@@ -10,10 +10,13 @@ import { icons, images } from "@/constants";
 import { fetchAPI } from "@/lib/fetch";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/Outh";
+import OTPInput from "@/components/OTPInput";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -28,6 +31,7 @@ const SignUp = () => {
 
   const onSignUpPress = async () => {
     if (!isLoaded) return;
+    setIsLoading(true);
     try {
       await signUp.create({
         emailAddress: form.email,
@@ -43,10 +47,13 @@ const SignUp = () => {
       // for more info on error handling
       console.log(JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
   const onPressVerify = async () => {
     if (!isLoaded) return;
+    setIsVerifying(true);
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verification.code,
@@ -80,6 +87,8 @@ const SignUp = () => {
         error: err.errors[0].longMessage,
         state: "failed",
       });
+    } finally {
+      setIsVerifying(false);
     }
   };
   return (
@@ -119,9 +128,11 @@ const SignUp = () => {
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
           <CustomButton
-            title="Sign Up"
+            title={isLoading ? "Signing up..." : "Sign Up"}
             onPress={onSignUpPress}
             style={styles.signUpButton}
+            disabled={isLoading}
+            IconRight={() => isLoading ? <ActivityIndicator color="#fff" /> : null}
           />
           <OAuth />
           <Text style={styles.loginText} className="text-center text-general-200">
@@ -144,26 +155,19 @@ const SignUp = () => {
             <Text style={styles.modalSubtitle} className="font-Jakarta">
               We've sent a verification code to {form.email}.
             </Text>
-            <InputField
-              label={"Code"}
-              icon={icons.lock}
-              placeholder={"12345"}
+            <OTPInput
+              length={5}
               value={verification.code}
-              keyboardType="numeric"
-              onChangeText={(code) =>
-                setVerification({ ...verification, code })
-              }
+              onChange={(code) => setVerification({ ...verification, code })}
+              error={verification.error}
             />
-            {verification.error && (
-              <Text style={styles.errorText} className="text-red-500 text-sm">
-                {verification.error}
-              </Text>
-            )}
             <CustomButton
-              title="Verify Email"
+              title={isVerifying ? "Verifying..." : "Verify Email"}
               onPress={onPressVerify}
               style={styles.verifyButton}
+              disabled={isVerifying}
               className="bg-success-500"
+              IconRight={() => isVerifying ? <ActivityIndicator color="#fff" /> : null}
             />
           </View>
         </ReactNativeModal>
