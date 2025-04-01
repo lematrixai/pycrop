@@ -8,18 +8,17 @@ import home from "@/assets/icons/home.png";
 import profile from "@/assets/icons/profile.png";
 import out from "@/assets/icons/out.png";
 import google from "@/assets/icons/google.png";
+import chat from "@/assets/icons/chat.png";
 import signInImage from "@/assets/images/signIn.png";
 import signUpImage from "@/assets/images/signUp.png";
-import check from "@/assets/icons/check.png";
 import tomato from "@/assets/images/tomato.jpg";
-
+import add from "@/assets/icons/add.png";
 export const images = {
   onboarding1,
   onboarding2,
   onboarding3,
   signInImage,
   signUpImage,
-  check,
   tomato,
 };
 
@@ -29,23 +28,23 @@ export const icons = {
   lock,
   home,
   profile,
+  add,
   out,
   google,
+  chat,
 };
-
-
 
 export const  onboarding = [
     {
         id: 1,
         title: "Welcome",
-        description: "We’re glad that you are here. Click get started to continue",
+        description: "We're glad that you are here. Click get started to continue",
         image: onboarding1,
 
     },
     {
         id: 2,
-        title: "Discover Your Plant’s Disease Early ",
+        title: "Discover Your Plant's Disease Early ",
         description: null,
         image: onboarding2,
 

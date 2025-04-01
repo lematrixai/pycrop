@@ -1,14 +1,14 @@
+import { useUser } from '@clerk/clerk-expo';
+import { Redirect } from 'expo-router'
 import React from 'react'
 import { View, Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 const Home = () => {
-  return (
-    <SafeAreaView>
-    <View>
-      <Text>Home</Text>
-    </View>
-    </SafeAreaView>
-  )
-}
+
+    return (
+      <View className='bg-white h-screen'>
+        <Text>Home</Text>
+      </View>
+    );
+  }
 
 export default Home

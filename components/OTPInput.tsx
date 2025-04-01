@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
@@ -9,15 +9,27 @@ interface OTPInputProps {
   error?: string;
 }
 
-const OTPInput = ({ length = 5, value, onChange, error }: OTPInputProps) => {
+const OTPInput = ({ length = 6, value, onChange, error }: OTPInputProps) => {
   const inputRefs = useRef<Array<TextInput | null>>([]);
   const [otp, setOtp] = useState<string[]>(Array(length).fill(''));
 
+  useEffect(() => {
+    // Update local state when value prop changes
+    if (value) {
+      const newOtp = value.split('').slice(0, length);
+      setOtp([...newOtp, ...Array(length - newOtp.length).fill('')]);
+    }
+  }, [value, length]);
+
   const handleChange = (text: string, index: number) => {
+    if (!/^\d*$/.test(text)) return; // Only allow digits
+    
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
-    onChange(newOtp.join(''));
+    
+    const joinedValue = newOtp.join('');
+    onChange(joinedValue);
 
     // Auto-focus next input
     if (text && index < length - 1) {
@@ -48,6 +60,7 @@ const OTPInput = ({ length = 5, value, onChange, error }: OTPInputProps) => {
             onChangeText={(text) => handleChange(text, index)}
             onKeyPress={(e) => handleKeyPress(e, index)}
             selectTextOnFocus
+            contextMenuHidden
           />
         ))}
       </View>
@@ -64,16 +77,16 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: scale(8),
+    gap: scale(4),
   },
   input: {
-    width: scale(45),
-    height: scale(45),
+    width: scale(40),
+    height: scale(40),
     borderRadius: scale(8),
     borderWidth: 1,
     borderColor: '#E5E7EB',
     textAlign: 'center',
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     backgroundColor: '#F9FAFB',
   },
   inputError: {

@@ -20,10 +20,17 @@ const SignIn = () => {
 
   const onSignInPress = useCallback(async () => {
     if (!isLoaded) return;
+    
+    // Validate required fields
+    if (!form.email.trim() || !form.password.trim()) {
+      Alert.alert("Error", "Please fill in all required fields");
+      return;
+    }
+
     setIsLoading(true);
     try {
       const signInAttempt = await signIn.create({
-        identifier: form.email,
+        identifier: form.email.trim(),
         password: form.password,
       });
 
@@ -66,6 +73,7 @@ const SignIn = () => {
             textContentType="emailAddress"
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
+            required={true}
           />
 
           <InputField
@@ -76,6 +84,7 @@ const SignIn = () => {
             textContentType="password"
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
+            required={true}
           />
 
           <CustomButton
@@ -95,6 +104,7 @@ const SignIn = () => {
           <Text style={styles.signUpLink}>
             Don't have an account?{" "}
             <Link href="/sign-up" style={styles.signUpText}>Sign Up</Link>
+
           </Text>
         </View>
       </View>
