@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   textContainer3: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
     padding: scale(20),
     top: verticalScale(48),
     fontFamily: 'Jakarta-ExtraBold',
@@ -188,11 +188,9 @@ const styles = StyleSheet.create({
     top: verticalScale(50),
     fontFamily: 'Jakarta-Regular',
     fontSize: moderateScale(14),
-    fontWeight: '500',
     textAlign: 'center',
     textAlignVertical: 'center',
     color: '#2D6936',
-    left: scale(70),
   },
   
   

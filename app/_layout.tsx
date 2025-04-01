@@ -8,22 +8,23 @@ import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native
 import "react-native-reanimated"
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { LogBox } from "react-native";
-// import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 
-// import { tokenCache } from "@/lib/auth";
+import { tokenCache } from "@/lib/auth";
 
-// // Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
 
-// const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
-// if (!publishableKey) {
-//   throw new Error(
-//     "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
-//   );
-// }
+if (!publishableKey) {
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
+  );
+}
 
 LogBox.ignoreLogs(["Clerk:"]);
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -53,7 +54,7 @@ export default function RootLayout() {
   }
 
   return (
-  
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -62,5 +63,6 @@ export default function RootLayout() {
      
       <StatusBar style="auto" />
       </ThemeProvider>
+      </ClerkProvider>
   );
 }
