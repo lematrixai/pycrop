@@ -1,15 +1,13 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React from 'react';
+import { View, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Profile = () => {
+export default function Chat() {
   return (
-    <SafeAreaView>
-    <View>
-      <Text>Profile</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Text style={{ color: 'black' }}>Chat</Text>
+      </View>
     </SafeAreaView>
-  )
+  );
 }
-
-export default Profile

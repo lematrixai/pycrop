@@ -23,7 +23,7 @@ const SignIn = () => {
     
     // Validate required fields
     if (!form.email.trim() || !form.password.trim()) {
-      Alert.alert("Error", "Please fill in all required fields");
+      Alert.alert("Sign In", "Please fill in all required fields");
       return;
     }
 
@@ -39,12 +39,10 @@ const SignIn = () => {
         router.replace("/(tabs)/home");
       } else {
         // See https://clerk.com/docs/custom-flows/error-handling for more info on error handling
-        console.log(JSON.stringify(signInAttempt, null, 2));
-        Alert.alert("Error", "Log in failed. Please try again.");
+        Alert.alert("Sign In", "Log in failed. Please try again.");
       }
     } catch (err: any) {
-      console.log(JSON.stringify(err, null, 2));
-      Alert.alert("Error", err.errors[0].longMessage);
+      Alert.alert("Sign In", err.errors[0].longMessage);
     } finally {
       setIsLoading(false);
     }

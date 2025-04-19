@@ -10,6 +10,7 @@ import { fetchAPI } from "@/lib/fetch";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/Outh";
 import OTPInput from "@/components/OTPInput";
+
 import LottieView from "lottie-react-native";
 
 type VerificationState = 'idle' | 'pending' | 'verifying' | 'success' | 'error';
@@ -36,7 +37,7 @@ const SignUp = () => {
     if (!isLoaded) return;
 
     if (!form.email.trim() || !form.password.trim()) {
-      Alert.alert("Error", "Please fill in all required fields");
+      Alert.alert("Sign Up", "Please fill in all required fields");
       return;
     }
 
@@ -51,12 +52,12 @@ const SignUp = () => {
     } catch (err: any) {
       if (err.errors?.[0]?.code === "session_exists") {
         Alert.alert(
-          "Session Exists",
+          "⚠️ Session Exists",
           "You're already signed in. Please sign out first to create a new account.",
           [{ text: "OK", onPress: () => router.replace("/sign-in") }]
         );
       } else {
-        Alert.alert("Error", err.errors[0].longMessage);
+        Alert.alert("Sign Up", err.errors[0].longMessage);
       }
     } finally {
       setIsSigningUp(false);

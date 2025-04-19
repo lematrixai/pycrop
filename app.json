@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "backgroundColor": "#447055",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/tomato.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

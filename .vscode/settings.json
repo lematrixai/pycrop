@@ -1,0 +1,9 @@
+{
+    "models": [
+      {
+        "name": "gemini-1.5-flash",
+        "apiKey": "YAIzaSyBpqqLldu85x0TX3S9wUP4rWDUNzrvanFw",
+        "baseUrl": "https://generativelanguage.googleapis.com/v1beta/"
+      }
+    ]
+  }
